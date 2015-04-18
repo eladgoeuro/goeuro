@@ -53,8 +53,7 @@ public class Location {
 
 	@Override
 	public String toString() {
-		return "Response [_type=" + _type + ", _id=" + _id + ", name=" + name
-				+ ", geo_position=" + geo_position + ", type=" + type + "]";
+		return "Response [_type=" + _type + ", _id=" + _id + ", name=" + name + ", geo_position=" + geo_position + ", type=" + type + "]";
 	}
 
 }

@@ -9,6 +9,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
+import com.google.gson.Gson;
+
 public class LocationsTools {
 
 	private static final String COMMA_DELIMITER = ",";
@@ -18,28 +20,24 @@ public class LocationsTools {
 	public static Location[] requestLocations(String url, String query) {
 		Location[] locations = null;
 		HttpResponse result = null;
-		try (CloseableHttpClient httpClient = HttpClientBuilder.create()
-				.build()) {
+		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
 			HttpGet request = new HttpGet(url + query);
 			result = httpClient.execute(request);
 			int code = result.getStatusLine().getStatusCode();
 			if (code == HttpStatus.SC_OK) {
-				String json = EntityUtils.toString(result.getEntity(), "UTF-8");
-				com.google.gson.Gson gson = new com.google.gson.Gson();
-				locations = gson.fromJson(json, Location[].class);
+				String jsonString = EntityUtils.toString(result.getEntity(), "UTF-8");
+				Gson gson = new Gson();
+				try {
+					locations = gson.fromJson(jsonString, Location[].class);
+				} catch (Exception e) {
+					System.out.println("Failed to parse json response." + e.getMessage());
+				}
 			} else {
-				System.out
-						.println("Error while trying to get a response from server. "
-								+ result.getStatusLine());
-				return null;
+				System.out.println("Error while trying to get a response from server. " + result.getStatusLine());
 			}
-
 		} catch (UnknownHostException ex) {
 			System.out.println("Unknown Host");
-			return locations;
-		}
-
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			System.out.println(ex.getMessage());
 		}
 		return locations;
@@ -59,19 +57,16 @@ public class LocationsTools {
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(location.get_id()));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(location.getName());
+				// fileWriter.append(location.getName());
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(location.getType());
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(String.valueOf(location.getGeo_position()
-						.getLatitude()));
+				fileWriter.append(String.valueOf(location.getGeo_position().getLatitude()));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(String.valueOf(location.getGeo_position()
-						.getLongitude()));
+				fileWriter.append(String.valueOf(location.getGeo_position().getLongitude()));
 				fileWriter.append(NEW_LINE_SEPARATOR);
 			}
-			System.out.println("Results where saved to file: " + fileName
-					+ " successfully.");
+			System.out.println("Results where saved to file: " + fileName + " successfully.");
 		} catch (Exception e) {
 			System.out.println("Error in CsvFileWriter!");
 			System.out.println(e.getMessage());

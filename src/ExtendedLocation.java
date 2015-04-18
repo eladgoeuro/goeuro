@@ -84,12 +84,8 @@ public class ExtendedLocation extends Location {
 
 	@Override
 	public String toString() {
-		return "Response [_type=" + _type + ", _id=" + _id + ", key=" + key
-				+ ", name=" + name + ", fullName=" + fullName
-				+ ", iata_airport_code=" + iata_airport_code + ", type=" + type
-				+ ", country=" + country + ", geo_position=" + geo_position
-				+ ", location_id=" + location_id + ", inEurope=" + inEurope
-				+ ", countryCode=" + countryCode + ", coreCountry="
+		return "Response [_type=" + _type + ", _id=" + _id + ", key=" + key + ", name=" + name + ", fullName=" + fullName + ", iata_airport_code=" + iata_airport_code + ", type=" + type
+				+ ", country=" + country + ", geo_position=" + geo_position + ", location_id=" + location_id + ", inEurope=" + inEurope + ", countryCode=" + countryCode + ", coreCountry="
 				+ coreCountry + ", distance=" + distance + "]";
 	}
 
