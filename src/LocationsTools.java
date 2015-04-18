@@ -30,16 +30,19 @@ public class LocationsTools {
 				try {
 					locations = gson.fromJson(jsonString, Location[].class);
 				} catch (Exception e) {
-					System.out.println("Failed to parse json response." + e.getMessage());
+					System.out.println("Failed to parse json response. " + e.getMessage());
 				}
 			} else {
 				System.out.println("Error while trying to get a response from server. " + result.getStatusLine());
 			}
 		} catch (UnknownHostException ex) {
-			System.out.println("Unknown Host");
+			System.out.println("Failed to connect to host. " + ex.getMessage());
+		} catch (IllegalArgumentException ex) {
+			System.out.println("Error: Query string is illegal. " + ex.getMessage());
 		} catch (IOException ex) {
 			System.out.println(ex.getMessage());
 		}
+
 		return locations;
 	}
 
@@ -57,7 +60,7 @@ public class LocationsTools {
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(location.get_id()));
 				fileWriter.append(COMMA_DELIMITER);
-				// fileWriter.append(location.getName());
+				fileWriter.append(location.getName());
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(location.getType());
 				fileWriter.append(COMMA_DELIMITER);

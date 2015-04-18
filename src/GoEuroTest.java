@@ -7,11 +7,8 @@ public class GoEuroTest {
 			System.out.println("Error: Search string is missing.");
 			return;
 		}
-		String query = null;
-		if (args.length > 0) {
-			query = args[0];
-		}
-		if (query == null) {
+		String query = args[0].trim();
+		if (query.length() == 0) {
 			System.out.println("Error: Search string is empty.");
 			return;
 		}
