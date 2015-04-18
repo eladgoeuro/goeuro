@@ -14,6 +14,7 @@ public class GoEuroTest {
 		Location[] locations = LocationsTools.requestLocations(SERVICE_URL,
 				query);
 		if (locations == null) {
+
 			return;
 		} else {
 			int resultsSize = locations.length;
